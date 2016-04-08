@@ -990,6 +990,25 @@ hr {
   font-style: normal;
   font-weight: normal; }
 
+@font-face {
+  font-family: "owniconfont";
+  src: url("../fonts/owniconfont/owniconfont.eot");
+  src: url("../fonts/owniconfont/owniconfont.eot?#iefix") format("eot"), url("../fonts/owniconfont/owniconfont.woff2") format("woff2"), url("../fonts/owniconfont/owniconfont.woff") format("woff"), url("../fonts/owniconfont/owniconfont.ttf") format("truetype"), url("../fonts/owniconfont/owniconfont.svg#owniconfont") format("svg"); }
+
+.fi:before {
+  font-family: "owniconfont";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  /* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
+  text-decoration: none;
+  text-transform: none; }
+
+.fi-drawing:before {
+  content: "\E001"; }
+
 /*======== sprite =========*/
 /*
 Icon classes can be used entirely standalone. They are named after their original file names.
@@ -1009,39 +1028,21 @@ To change `display` (e.g. `display: inline-block;`), we suggest using a common C
 // HTML
 <i class="icon icon-home"></i>
 */
-.icon-Sheet-of-newspaper {
-  background-image: url(../img/sprite/sprite.png);
-  background-position: -139px -60px;
-  width: 48px;
-  height: 48px; }
-
-.icon-big-binoculars {
-  background-image: url(../img/sprite/sprite.png);
-  background-position: 0px 0px;
-  width: 65px;
-  height: 47px; }
-
 .icon-calipers {
   background-image: url(../img/sprite/sprite.png);
-  background-position: 0px -57px;
+  background-position: 0px 0px;
   width: 56px;
   height: 52px; }
 
 .icon-plastic-pen {
   background-image: url(../img/sprite/sprite.png);
-  background-position: -75px 0px;
+  background-position: -66px 0px;
   width: 54px;
   height: 52px; }
 
 .icon-screwdriver-and-wrench {
   background-image: url(../img/sprite/sprite.png);
-  background-position: -139px 0px;
-  width: 50px;
-  height: 50px; }
-
-.icon-squares {
-  background-image: url(../img/sprite/sprite.png);
-  background-position: 0px -119px;
+  background-position: 0px -62px;
   width: 50px;
   height: 50px; }
 
@@ -1049,6 +1050,10 @@ To change `display` (e.g. `display: inline-block;`), we suggest using a common C
 /*======================= Styles ==========================*/
 body {
   font-family: "RobotoRegular"; }
+
+.fi {
+  font-size: 69px;
+  color: red; }
 
 /*==========  Desktop First Method  ==========*/
 /* Large Devices, Wide Screens */

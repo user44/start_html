@@ -1,0 +1,26 @@
+@font-face {
+	font-family: "owniconfont";
+	src: url('../fonts/owniconfont/owniconfont.eot');
+	src: url('../fonts/owniconfont/owniconfont.eot?#iefix') format('eot'),
+		url('../fonts/owniconfont/owniconfont.woff2') format('woff2'),
+		url('../fonts/owniconfont/owniconfont.woff') format('woff'),
+		url('../fonts/owniconfont/owniconfont.ttf') format('truetype'),
+		url('../fonts/owniconfont/owniconfont.svg#owniconfont') format('svg');
+}
+
+.fi:before {
+	font-family: "owniconfont";
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	/* speak: none; only necessary if not using the private unicode range (firstGlyph option) */
+	text-decoration: none;
+	text-transform: none;
+}
+
+
+.fi-drawing:before {
+	content: "\E001";
+}

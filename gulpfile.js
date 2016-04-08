@@ -9,7 +9,9 @@ var gulp 					= require('gulp'),
 		del          	= require('del'),
 		cache        	= require('gulp-cache'),
 		cssnano				= require('gulp-cssnano'),
-		spritesmith		=	require('gulp.spritesmith');
+		spritesmith		=	require('gulp.spritesmith'),
+		iconfont			= require('gulp-iconfont'), // используется вместе с gulp-iconfont-css
+		iconfontCss 	= require('gulp-iconfont-css');
 
 // BrowserSync
 gulp.task('browser-sync', function() {
@@ -36,10 +38,11 @@ gulp.task('watch', function() {
 	gulp.watch('sass/*.sass', ['styles']);
 	gulp.watch('app/js/*.js').on("change", browserSync.reload);
 	gulp.watch('app/*.html').on("change", browserSync.reload);
+	gulp.watch('app/img/sprite/**/*', ['sprite']);
 });
 
 //Default task
-gulp.task('default', ['browser-sync', 'watch']);
+gulp.task('default', ['browser-sync', 'watch', 'sprite']);
 
 //Сжатие картинок
 gulp.task('img', function() {
@@ -56,12 +59,37 @@ gulp.task('img', function() {
 //сборка спрайтов
 gulp.task('sprite', function() {
 	var spriteData = gulp.src(['app/img/sprite/*.+(png|jpg)', '!app/img/sprite/sprite.png']).pipe(spritesmith({
-	    imgName: 'sprite.png',
-	    cssName: 'sprite.css',
-	    padding: 10, // padding мужду картинками в исходном sprite.png
-	    imgPath: '../img/sprite/sprite.png' // путь к спрайту
-	  }));
-	  return spriteData.pipe(gulp.dest('app/img/sprite/'));
+			imgName: 'sprite.png',
+			cssName: 'sprite.css',
+			padding: 10, // padding мужду картинками в исходном sprite.png
+			imgPath: '../img/sprite/sprite.png' // путь к спрайту
+		}));
+		return spriteData.pipe(gulp.dest('app/img/sprite/'));
+});
+
+
+// преобразование svg в шрифт
+var runTimestamp = Math.round(Date.now()/1000);
+gulp.task('iconfont', function(){
+	return gulp.src(['app/img/svg/**/*.svg'])
+		.pipe(iconfontCss({
+			fontName: "owniconfont",
+			// path: 'app/assets/css/templates/_icons.scss',
+			targetPath: '../../../sass/iconfont.css',
+			fontPath: '../fonts/owniconfont/',
+			cssClass: 'fi'
+		}))
+		.pipe(iconfont({
+			fontName: 'owniconfont', // required 
+			prependUnicode: true, // recommended option 
+			formats: ['ttf', 'eot', 'woff', 'svg', 'woff2'], // default, 'woff2' and 'svg' are available 
+			timestamp: runTimestamp, // recommended to get consistent builds when watching files 
+		}))
+			.on('glyphs', function(glyphs, options) {
+				// CSS templating, e.g. 
+				console.log(glyphs, options);
+			})
+		.pipe(gulp.dest('app/fonts/owniconfont'));
 });
 
 //-----------------------------------Production tasks
@@ -91,8 +119,8 @@ gulp.task('production',  ['clean', 'img', 'styles', 'scripts'], function() {
 			'app/css/main.css'
 		])
 		.pipe(cssnano({
-          discardComments: {removeAll: true} // удаляем комментарии в css
-        })) //минификация css
+					discardComments: {removeAll: true} // удаляем комментарии в css
+				})) //минификация css
 		.pipe(gulp.dest('dist/css')); // перенос css в продакшн
 
 	var moveFonts = gulp.src('app/fonts/**/*')
