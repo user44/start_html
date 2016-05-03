@@ -42,7 +42,7 @@ gulp.task('watch', function() {
 });
 
 //Default task
-gulp.task('default', ['browser-sync', 'watch', 'sprite']);
+gulp.task('default', ['browser-sync', 'watch']);
 
 //Сжатие картинок
 gulp.task('img', function() {
