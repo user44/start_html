@@ -57,15 +57,27 @@ gulp.task('img', function() {
 });
 
 //сборка спрайтов
-gulp.task('sprite', function() {
+gulp.task('sprite-nonmin', function() {
 	var spriteData = gulp.src(['app/img/sprite/*.+(png|jpg)', '!app/img/sprite/sprite.png']).pipe(spritesmith({
 			imgName: 'sprite.png',
 			cssName: 'sprite.css',
+			// algorithm: 'top-down',
 			padding: 10, // padding мужду картинками в исходном sprite.png
 			imgPath: '../img/sprite/sprite.png' // путь к спрайту
 		}));
 		return spriteData.pipe(gulp.dest('app/img/sprite/'));
 });
+gulp.task('sprite', ['sprite-nonmin'], function() {
+	return gulp.src('app/img/sprite/sprite.png') //берем готовый спрайт
+	.pipe(imagemin({		//сжимаем его
+		interlaced: true,
+		progressive: true,
+		svgoPlugins: [{removeViewBox: false}],
+		use: [pngquant()]
+	})) 																
+	.pipe(gulp.dest('app/img/sprite/')) //выгружаем назад
+
+})
 
 
 // преобразование svg в шрифт
@@ -97,6 +109,8 @@ gulp.task('iconfont', function(){
 gulp.task('scripts', function() {
 	return gulp.src([ // Берем все необходимые библиотеки
 		'app/libs/jquery/jquery-1.12.3.min.js', // Берем jQuery
+		'app/libs/maskedinput/jquery.maskedinput.min.js',
+		'app/libs/magnific-popup/dist/jquery.magnific-popup.min.js', 
 		'app/js/main.js' // Берем main.js
 		])
 		.pipe(concat('all.min.js')) // Собираем их в кучу в новом файле all.min.js
