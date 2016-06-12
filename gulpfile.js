@@ -27,7 +27,7 @@ gulp.task('browser-sync', function() {
 // Компиляция стилей
 gulp.task('styles', function() {
 	return gulp.src('sass/*.sass')
-	.pipe(sass().on('error', sass.logError))
+	.pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError)) //nested compact expanded compressed
 	.pipe(autoPrefixer({browsers: ['last 60 versions'], cascade: false}))
 	.pipe(gulp.dest('app/css'))
 	.pipe(browserSync.stream());
