@@ -115,7 +115,7 @@ gulp.task('scripts', function() {
 		])
 		.pipe(concat('all.min.js')) // Собираем их в кучу в новом файле all.min.js
 		.pipe(uglify()) // Сжимаем JS файл
-		.pipe(gulp.dest('dist/js')); // Выгружаем в папку app/js
+		.pipe(gulp.dest('dist/js')); // Выгружаем в папку dist/js
 });
 
 //clean dist
