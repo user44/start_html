@@ -6,6 +6,7 @@ var gulp 					= require('gulp'),
 		uglify				=	require('gulp-uglifyjs'),
 		imagemin			= require('gulp-imagemin'),
 		pngquant     	= require('imagemin-pngquant'),
+		tinypng				=	require('gulp-tinypng'),
 		del          	= require('del'),
 		cache        	= require('gulp-cache'),
 		cssnano				= require('gulp-cssnano'),
@@ -54,6 +55,13 @@ gulp.task('img', function() {
 			use: [pngquant()]
 		})))
 		.pipe(gulp.dest('app/img')); // выгружаем назад
+});
+
+//Сжатие картинок на tinypng
+gulp.task('tiny', function() {
+	 gulp.src(['app/img/**/*', '!app/img/sprite/**/*', '!app/img/favicon/**/*'])
+    .pipe(tinypng('yuR_gbMRe3-_Kt6HacIkBY7t_Tur_4yA'))
+    .pipe(gulp.dest('app/img'));
 });
 
 //сборка спрайтов
