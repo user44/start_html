@@ -12,7 +12,8 @@ var gulp 					= require('gulp'),
 		cssnano				= require('gulp-cssnano'),
 		spritesmith		=	require('gulp.spritesmith'),
 		iconfont			= require('gulp-iconfont'), // используется вместе с gulp-iconfont-css
-		iconfontCss 	= require('gulp-iconfont-css');
+		iconfontCss 	= require('gulp-iconfont-css'),
+		rsync 				= require('gulp-rsync');
 
 // BrowserSync
 gulp.task('browser-sync', function() {
@@ -110,6 +111,21 @@ gulp.task('iconfont', function(){
 				console.log(glyphs, options);
 			})
 		.pipe(gulp.dest('app/fonts/owniconfont'));
+});
+
+//gulp-deploy
+gulp.task('deploy', function() {
+  return gulp.src('app/**')
+    .pipe(rsync({
+      root: 'app/',
+      hostname: 'a174054.ftp.mchost.ru',
+      username: 'a174054_dev_pro',
+      destination: 'httpdocs/newproj/',
+      archive: true,
+      silent: false,
+      compress: true,
+      chmod: "ugo=rwX"
+    }));
 });
 
 //-----------------------------------Production tasks
